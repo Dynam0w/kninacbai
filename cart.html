@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - TenagaBatin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="green.gif" alt="Your Logo" width="24" height="24">
+                <span>TenangBatin</span>
+            </div>
+
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Catalog</a>
+                <a href="reviews.html" class="nav-link">Reviews</a>
+                <a href="#" class="nav-link">Support</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="cart-container">
+                    <button class="cart-btn" id="cart-btn" aria-label="Cart">
+                        <img src="images/cart1.png" alt="Cart" width="24" height="24" style="display: block;">
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="cart-header">
+                <h1>Shopping Cart</h1>
+                <button class="back-btn" onclick="window.location.href='index.html'">← Back to Shop</button>
+            </div>
+
+            <div class="cart-content">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded here -->
+                </div>
+
+                <div class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+
+                        <!-- Add Product Protection Option Here -->
+                        <div class="protection-option">
+                            <label class="protection-checkbox">
+                                <input type="checkbox" id="product-protection" onchange="updateProtectionCost()">
+                                <span class="checkmark"></span>
+                                <div class="protection-text">
+                                    <strong>Optional Product Protection</strong>
+                                    <p>If your product goes missing, gets lost, is held at customs, or arrives damaged, we provide 100% coverage and replacement. Product protection is completely optional - it's your choice ✅ Select this option for complete peace of mind and worry-free shopping.</p>
+                                    <span class="protection-cost">RM15 per item</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">RM 0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="shipping">RM 15</span>
+                        </div>
+                        <div class="summary-row" id="protection-row" style="display: none;">
+                            <span>Product Protection:</span>
+                            <span id="protection-fee">RM 10</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">RM 15</span>
+                        </div>
+
+                        <!-- NEW: Telegram payment notice with info button -->
+                        <div class="pay-note">
+                            Purchases are via Telegram
+                            <button id="howToPayBtn" class="info-btn" title="How to pay">ⓘ</button>
+                        </div>
+
+                        <button class="pay-btn" id="pay-btn">Proceed</button>
+                        <button class="clear-cart-btn" id="clear-cart-btn">Clear Cart</button>
+                    </div>
+                </div>
+
+                <div class="empty-cart" id="empty-cart" style="display: none;">
+                    <h2>Your cart is empty</h2>
+                    <p>Add some products to get started!</p>
+                    <button class="browse-btn" onclick="window.location.href='index.html'">Browse Products</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- NEW: How-to-pay Modal with Slideshow -->
+    <div class="pay-modal" id="payModal">
+        <div class="pay-modal-content">
+            <span class="pay-modal-close" id="payCloseBtn">✕</span>
+
+            <!-- Slideshow Container -->
+            <div class="slideshow-container">
+                <!-- Step 1 -->
+                <div class="slide active">
+                    <img src="images/step1.png" alt="Step 1" />
+                    <div class="step-info">
+                        <h3>Step 1</h3>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="slide">
+                    <img src="images/step2.png" alt="Step 2" />
+                    <div class="step-info">
+                        <h3>Step 2</h3>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="slide">
+                    <img src="images/step3.png" alt="Step 3" />
+                    <div class="step-info">
+                        <h3>Step 3</h3>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button class="slide-btn prev" id="prevBtn">‹</button>
+                <button class="slide-btn next" id="nextBtn">›</button>
+
+                <!-- Step Indicators -->
+                <div class="slide-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <!-- Brand & tag-line -->
+            <div class="footer-brand">
+                <h2 class="footer-logo">
+                    <img src="green.gif" width="28" height="28" alt="Logo">
+                    TenagaBatin
+                </h2>
+                <p class="footer-tag">Premium green, safe delivery &amp; 24 / 7 support.</p>
+            </div>
+
+            <!-- Navigation columns -->
+            <nav class="footer-col">
+                <h3>Browse</h3>
+                <a href="#" class="footer-link">Catalog</a>
+                <a href="reviews.html" class="footer-link">Reviews</a>
+                <a href="https://t.me/exerlie" target="_blank" class="footer-link">Support</a>
+            </nav>
+
+            <nav class="footer-col">
+                <h3>Company</h3>
+                <a href="https://t.me/Boskutenagabatin" target="_blank" class="footer-link">Owner</a>
+                <a href="https://t.me/exerlie" target="_blank" class="footer-link">Developer</a>
+                <span class="footer-link-disabled">Terms&nbsp;of&nbsp;Service</span>
+                <span class="footer-link-disabled">Privacy&nbsp;Policy</span>
+                <span class="footer-link-disabled">FAQ</span>
+            </nav>
+
+            <nav class="footer-col">
+                <h3>Contact</h3>
+                <a href="https://t.me/tenangcomunitychat" target="_blank" class="footer-link">
+                    Telegram&nbsp;Group
+                </a>
+                <span class="footer-link-disabled">Email&nbsp;Support</span>
+            </nav>
+        </div>
+
+        <!-- bottom strip - centered copyright only -->
+        <div class="footer-bottom">
+            <span>&copy; 2025 · TenagaBatin.xyz All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .product-nav {
+        flex-direction: column;
+    }
+
+    .nav-tab {
+        justify-content: center;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .delivery-notice {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .product-card {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .stats {
+        gap: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
