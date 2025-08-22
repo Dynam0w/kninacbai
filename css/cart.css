@@ -1192,7 +1192,7 @@
 }
 
 .pay-btn:hover {
-    background: linear-gradient(135deg, #22C55E, #16A34A);
+    background: linear-gradient(135deg, #4ADE80, #22C55E);
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(74, 222, 128, 0.4);
 }
