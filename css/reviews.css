@@ -574,7 +574,8 @@
         font-size: 0.75rem;
     }    
 }
-/* SMALLER NAVIGATION ARROWS - BETTER PROPORTIONS */
+
+/* SMALLER NAVIGATION ARROWS - WHITE COLOR */
 .modal-nav-btn {
     position: absolute;
     top: 50%;
@@ -582,7 +583,7 @@
     background: rgba(74, 222, 128, 0.95);
     border: none;
     border-radius: 10px;
-    width: 45px;  /* Smaller like mobile */
+    width: 45px;
     height: 45px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -593,6 +594,9 @@
     backdrop-filter: blur(15px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     border: 2px solid rgba(74, 222, 128, 0.8);
+    color: #ffffff !important; /* WHITE ARROW COLOR */
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .modal-nav-btn:hover {
@@ -600,50 +604,21 @@
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 8px 25px rgba(74, 222, 128, 0.5);
     border-color: rgba(74, 222, 128, 1);
+    color: #ffffff !important; /* WHITE ARROW COLOR ON HOVER */
 }
 
 .modal-nav-btn:active {
     transform: translateY(-50%) scale(1.05);
+    color: #ffffff !important; /* WHITE ARROW COLOR ON ACTIVE */
 }
 
 /* Position arrows OUTSIDE the image area */
 .modal-prev {
-    left: -65px; /* Adjusted for smaller buttons */
+    left: -65px;
 }
 
 .modal-next {
-    right: -65px; /* Adjusted for smaller buttons */
-}
-
-/* Smaller arrow icons */
-.arrow-icon {
-    width: 20px;  /* Smaller icons */
-    height: 20px;
-    position: relative;
-}
-
-.arrow-left::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 12px;  /* Smaller arrow size */
-    height: 12px;
-    border-left: 3px solid #ffffff;
-    border-bottom: 3px solid #ffffff;
-    transform: translate(-25%, -50%) rotate(45deg);
-}
-
-.arrow-right::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 12px;  /* Smaller arrow size */
-    height: 12px;
-    border-right: 3px solid #ffffff;
-    border-bottom: 3px solid #ffffff;
-    transform: translate(-75%, -50%) rotate(-45deg);
+    right: -65px;
 }
 
 /* Hide arrows when there's only one image */
@@ -671,9 +646,11 @@
 /* MOBILE: Keep same size as desktop now */
 @media (max-width: 768px) {
     .modal-nav-btn {
-        width: 45px;  /* Same as desktop */
+        width: 45px;
         height: 45px;
         border-radius: 8px;
+        color: #ffffff !important; /* WHITE ARROW COLOR ON MOBILE */
+        font-size: 14px;
     }
 
     .modal-prev {
@@ -682,18 +659,6 @@
 
     .modal-next {
         right: -60px;
-    }
-
-    .arrow-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    .arrow-left::before,
-    .arrow-right::before {
-        width: 10px;
-        height: 10px;
-        border-width: 2px;
     }
 
     .image-counter {
@@ -713,6 +678,8 @@
     .modal-nav-btn {
         width: 40px;
         height: 40px;
+        color: #ffffff !important; /* WHITE ARROW COLOR ON SMALL SCREENS */
+        font-size: 12px;
     }
 
     .modal-prev {
@@ -721,18 +688,6 @@
 
     .modal-next {
         right: -55px;
-    }
-
-    .arrow-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .arrow-left::before,
-    .arrow-right::before {
-        width: 8px;
-        height: 8px;
-        border-width: 2px;
     }
 
     .image-counter {
@@ -750,8 +705,10 @@
 /* For wide screens - keep them reasonably sized */
 @media (min-width: 1200px) {
     .modal-nav-btn {
-        width: 50px;  /* Slightly bigger on wide screens */
+        width: 50px;
         height: 50px;
+        color: #ffffff !important; /* WHITE ARROW COLOR ON LARGE SCREENS */
+        font-size: 18px;
     }
 
     .modal-prev {
@@ -760,18 +717,6 @@
 
     .modal-next {
         right: -70px;
-    }
-
-    .arrow-icon {
-        width: 22px;
-        height: 22px;
-    }
-
-    .arrow-left::before,
-    .arrow-right::before {
-        width: 14px;
-        height: 14px;
-        border-width: 3px;
     }
 
     .image-counter {
