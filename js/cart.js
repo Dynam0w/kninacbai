@@ -3,11 +3,14 @@ const SHIPPING_COST = 15;
 const PROTECTION_COST_PER_ITEM = 15;
 let protectionEnabled = false;
 
+// Slideshow variables
+let currentSlide = 0;
+const totalSlides = 3;
+
 // Protection function for cart page
 function initializeCartProtection() {
     // Disable right-click
     document.addEventListener('contextmenu', event => event.preventDefault());
-
     // Disable image dragging
     disableImageDrag();
 
@@ -15,20 +18,14 @@ function initializeCartProtection() {
     let devToolsOpen = false;
     const threshold = 160;
 
-    // Method 1: Window size difference detection
     function checkDevTools() {
-        // First check if this is a mobile device
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        // Skip this detection method on mobile devices
         if (isMobile) return;
-
         const widthThreshold = window.outerWidth - window.innerWidth > threshold;
         const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-
         if (widthThreshold || heightThreshold) {
             if (!devToolsOpen) {
                 devToolsOpen = true;
-                // Take action when DevTools opens
                 document.body.innerHTML = "Access Denied - Developer Tools Detected";
             }
         } else {
@@ -36,31 +33,26 @@ function initializeCartProtection() {
         }
     }
 
-    // Method 2: Console detection function
     function detectConsoleOpen() {
         const startTime = performance.now();
         console.log('%c', 'color: transparent');
         const endTime = performance.now();
-
         if (endTime - startTime > 100 && !devToolsOpen) {
             devToolsOpen = true;
             document.body.innerHTML = "Access Denied - Developer Tools Detected";
         }
     }
 
-    // Method 3: debugger detection
     function detectDebugger() {
         const startTime = new Date();
         debugger;
         const endTime = new Date();
-
         if (endTime - startTime > 100 && !devToolsOpen) {
             devToolsOpen = true;
             document.body.innerHTML = "Access Denied - Developer Tools Detected";
         }
     }
 
-    // Method 4: console.clear detection
     const originalClear = console.clear;
     console.clear = function () {
         if (!devToolsOpen) {
@@ -70,82 +62,43 @@ function initializeCartProtection() {
         originalClear.call(console);
     };
 
-    // Block keyboard shortcuts for DevTools
     document.onkeydown = function (e) {
-        // Block F12
-        if (e.keyCode == 123) {
-            return false;
-        }
-
-        // Block Ctrl+Shift+I
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-            return false;
-        }
-
-        // Block Ctrl+Shift+J
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-            return false;
-        }
-
-        // Block Ctrl+Shift+C
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-            return false;
-        }
-
-        // Block Ctrl+U (View Source)
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-            return false;
-        }
+        if (e.keyCode == 123) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
     };
 
-    // Run all detection methods periodically
     setInterval(checkDevTools, 1000);
     setInterval(detectDebugger, 2000);
     setInterval(detectConsoleOpen, 1000);
 
-    // Additional protection: Detect Firebug
     if (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) {
         document.body.innerHTML = "Access Denied - Developer Tools Detected";
     }
 
-    // Additional protection: Detect if DevTools is already open when page loads
     setTimeout(checkDevTools, 500);
     setTimeout(detectConsoleOpen, 700);
 }
 
-// Function to disable image dragging
 function disableImageDrag() {
-    // Disable dragging for existing images
     const images = document.querySelectorAll('img');
     images.forEach(img => {
         img.addEventListener('dragstart', function(e) {
             e.preventDefault();
             return false;
         });
-
-        // Additional protection
         img.setAttribute('draggable', 'false');
         img.style.userDrag = 'none';
         img.style.webkitUserDrag = 'none';
     });
 
-    // Disable dragging for future images (using event delegation)
     document.addEventListener('dragstart', function(e) {
         if (e.target.tagName === 'IMG') {
             e.preventDefault();
             return false;
         }
-    });
-
-    // Additional general drag protection
-    document.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        return false;
-    });
-
-    document.addEventListener('drop', function(e) {
-        e.preventDefault();
-        return false;
     });
 }
 
@@ -154,7 +107,6 @@ function loadCartItems() {
     const emptyCartContainer = document.getElementById('empty-cart');
     const cartBadge = document.getElementById('cart-badge');
 
-    // Update cart badge
     if (cartBadge) {
         cartBadge.textContent = cartItems.length;
     }
@@ -188,7 +140,6 @@ function loadCartItems() {
         </div>
     `).join('');
 
-    // Apply protection to newly loaded images
     setTimeout(() => {
         disableImageDrag();
     }, 100);
@@ -252,23 +203,18 @@ function clearCart() {
     }
 }
 
-// Slideshow functionality
-let currentSlide = 0;
-const totalSlides = 3;
-
+// WORKING SLIDESHOW FUNCTIONALITY
 function showSlide(n) {
     const slides = document.querySelectorAll('.slide');
     const indicators = document.querySelectorAll('.indicator');
 
-    // Wrap around if necessary
     if (n >= totalSlides) currentSlide = 0;
     if (n < 0) currentSlide = totalSlides - 1;
+    else currentSlide = n;
 
-    // Hide all slides
     slides.forEach(slide => slide.classList.remove('active'));
     indicators.forEach(indicator => indicator.classList.remove('active'));
 
-    // Show current slide
     if (slides[currentSlide]) {
         slides[currentSlide].classList.add('active');
     }
@@ -276,67 +222,126 @@ function showSlide(n) {
         indicators[currentSlide].classList.add('active');
     }
 
-    // Apply protection to slide images
     setTimeout(() => {
         disableImageDrag();
     }, 100);
 }
 
 function nextSlide() {
-    currentSlide++;
-    showSlide(currentSlide);
+    showSlide(currentSlide + 1);
 }
 
 function prevSlide() {
-    currentSlide--;
-    showSlide(currentSlide);
+    showSlide(currentSlide - 1);
 }
 
 function goToSlide(n) {
-    currentSlide = n;
-    showSlide(currentSlide);
+    showSlide(n);
 }
 
-// Enhanced modal functionality with protection
-function initializeModalProtection() {
-    const payModal = document.getElementById('payModal');
+// FIXED: CREATE ARROWS FUNCTION - NON-LOOPING + MOBILE SUPPORT
+function createArrows() {
+    const slideshow = document.querySelector('.slideshow-container');
+    if (!slideshow) return;
 
-    if (payModal) {
-        // Apply protection when modal opens
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    if (payModal.style.display === 'block') {
-                        setTimeout(() => {
-                            disableImageDrag();
-                        }, 100);
-                    }
-                }
-            });
-        });
+    // Remove any existing arrows
+    const existingArrows = slideshow.querySelectorAll('.slide-arrow-btn');
+    existingArrows.forEach(arrow => arrow.remove());
 
-        observer.observe(payModal, {
-            attributes: true,
-            attributeFilter: ['style']
-        });
+    // Create left arrow
+    const leftArrow = document.createElement('button');
+    leftArrow.classList.add('slide-arrow-btn', 'slide-arrow-left');
+    leftArrow.id = 'modalPrevBtn';
+    leftArrow.innerHTML = '◀';
+    leftArrow.addEventListener('click', prevSlide);
+    slideshow.appendChild(leftArrow);
+
+    // Create right arrow
+    const rightArrow = document.createElement('button');
+    rightArrow.classList.add('slide-arrow-btn', 'slide-arrow-right');
+    rightArrow.id = 'modalNextBtn';
+    rightArrow.innerHTML = '▶';
+    rightArrow.addEventListener('click', nextSlide);
+    slideshow.appendChild(rightArrow);
+
+    console.log('Arrows created successfully!'); // Debug log
+}
+
+// FIXED: NON-LOOPING SLIDESHOW FUNCTIONS
+function showSlide(n) {
+    const slides = document.querySelectorAll('.slide');
+    const indicators = document.querySelectorAll('.indicator');
+    const leftArrow = document.getElementById('modalPrevBtn');
+    const rightArrow = document.getElementById('modalNextBtn');
+
+    // Prevent looping - stop at boundaries
+    if (n < 0) currentSlide = 0;
+    else if (n >= totalSlides) currentSlide = totalSlides - 1;
+    else currentSlide = n;
+
+    // Show/hide slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    indicators.forEach(indicator => indicator.classList.remove('active'));
+
+    if (slides[currentSlide]) {
+        slides[currentSlide].classList.add('active');
+    }
+    if (indicators[currentSlide]) {
+        indicators[currentSlide].classList.add('active');
+    }
+
+    // Disable arrows at boundaries
+    if (leftArrow) {
+        if (currentSlide === 0) {
+            leftArrow.disabled = true;
+            leftArrow.style.opacity = '0.4';
+            leftArrow.style.cursor = 'not-allowed';
+        } else {
+            leftArrow.disabled = false;
+            leftArrow.style.opacity = '1';
+            leftArrow.style.cursor = 'pointer';
+        }
+    }
+
+    if (rightArrow) {
+        if (currentSlide === totalSlides - 1) {
+            rightArrow.disabled = true;
+            rightArrow.style.opacity = '0.4';
+            rightArrow.style.cursor = 'not-allowed';
+        } else {
+            rightArrow.disabled = false;
+            rightArrow.style.opacity = '1';
+            rightArrow.style.cursor = 'pointer';
+        }
+    }
+
+    setTimeout(() => {
+        disableImageDrag();
+    }, 100);
+}
+
+function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+        showSlide(currentSlide + 1);
+    }
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        showSlide(currentSlide - 1);
     }
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize protection first
     initializeCartProtection();
-    initializeModalProtection();
-
     loadCartItems();
 
-    // Clear cart button
     const clearCartBtn = document.getElementById('clear-cart-btn');
     if (clearCartBtn) {
         clearCartBtn.addEventListener('click', clearCart);
     }
 
-    // Telegram payment button
     const payBtn = document.getElementById('pay-btn');
     if (payBtn) {
         payBtn.addEventListener('click', () => {
@@ -348,20 +353,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // How-to-pay modal logic
+    // Modal logic
     const payModal = document.getElementById('payModal');
     const howBtn = document.getElementById('howToPayBtn');
     const closePay = document.getElementById('payCloseBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
 
     if (howBtn && payModal && closePay) {
         // Open modal
         howBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            currentSlide = 0; // Reset to first slide
-            showSlide(currentSlide);
+            currentSlide = 0;
             payModal.style.display = 'block';
+            setTimeout(() => {
+                createArrows(); // Create arrows when modal opens
+                showSlide(0);
+            }, 100);
         });
 
         // Close modal
@@ -376,21 +382,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Navigation buttons
-        if (nextBtn) {
-            nextBtn.addEventListener('click', nextSlide);
-        }
-        if (prevBtn) {
-            prevBtn.addEventListener('click', prevSlide);
-        }
-
         // Indicator dots
         const indicators = document.querySelectorAll('.indicator');
         indicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => goToSlide(index));
         });
 
-        // Enhanced keyboard navigation with protection
+        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (payModal.style.display === 'block') {
                 if (e.key === 'ArrowLeft') prevSlide();
