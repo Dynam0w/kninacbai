@@ -194,7 +194,7 @@ const productsData = [
         price: 690,
         category: "buds",
         type: "buds",
-        stock: 0,
+        stock: "∞",
         image: "images/wattaya-purple.jpg"
     },
     {
