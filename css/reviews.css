@@ -35,7 +35,7 @@
 .sync-dot {
     width: 6px;
     height: 6px;
-    background: #4ADE80;
+    background: #af2c2c;
     border-radius: 50%;
     animation: pulse 2s infinite;
 }
