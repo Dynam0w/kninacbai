@@ -360,7 +360,7 @@ function createReviewCard(review, index) {
     `;
 }
 
-// UPDATED: Image modal functionality with STYLED ARROWS
+// UPDATED: Image modal functionality with SIMPLE ARROW SYMBOLS
 function initializeImageModal() {
     // Remove any existing modal first
     const existingModal = document.getElementById('imageModal');
@@ -368,20 +368,16 @@ function initializeImageModal() {
         existingModal.remove();
     }
 
-    // Create modal with styled arrows that match your design
+    // Create modal with simple arrow symbols ◀ and ▶
     const modalHTML = `
         <div id="imageModal" class="image-modal">
             <span class="image-modal-close">&times;</span>
             <div class="image-modal-content">
                 <img id="modalImage" src="" alt="Review Image" draggable="false">
 
-                <!-- Styled navigation arrows -->
-                <button class="modal-nav-btn modal-prev" id="modalPrevBtn">
-                    <div class="arrow-icon arrow-left"></div>
-                </button>
-                <button class="modal-nav-btn modal-next" id="modalNextBtn">
-                    <div class="arrow-icon arrow-right"></div>
-                </button>
+                <!-- Simple arrow symbols -->
+                <button class="modal-nav-btn modal-prev" id="modalPrevBtn">◀</button>
+                <button class="modal-nav-btn modal-next" id="modalNextBtn">▶</button>
 
                 <!-- Image Counter -->
                 <div class="image-counter" id="imageCounter">
@@ -445,7 +441,7 @@ function initializeImageModal() {
     function handleTouchEnd(e) {
         if (!touchStartX || !touchStartY) return;
 
-        touchEndX = e.changedTouches.clientX;
+        touchEndX = e.changedTouches[0].clientX;
         touchEndY = e.changedTouches.clientY;
 
         handleSwipe();
