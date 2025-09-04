@@ -149,7 +149,7 @@ const productsData = [
         price: 430,
         category: "cb",
         type: "cb",
-        stock: "∞",
+        stock: "0",
         image: "images/labubu-purple.jpg"
     },
     {
@@ -203,7 +203,7 @@ const productsData = [
         price: 300,
         category: "cb",
         type: "cb",
-        stock: "∞",
+        stock: "0",
         image: "images/peat-shebet.png"
     },
     {
@@ -212,7 +212,7 @@ const productsData = [
         price: 350,
         category: "cb",
         type: "cb",
-        stock: "∞",
+        stock: "0",
         image: "images/cb-snow-diamond.jpg"
     },
     {
@@ -230,7 +230,7 @@ const productsData = [
         price: 1000,
         category: "buds",
         type: "buds",
-        stock: "∞",
+        stock: "0",
         image: "images/snow-diamond.png"
     },
     {
@@ -248,7 +248,7 @@ const productsData = [
         price: 490,
         category: "buds",
         type: "buds",
-        stock: "∞",
+        stock: "0",
         image: "images/kunsher-kush.png"
     },
     {
@@ -257,7 +257,7 @@ const productsData = [
         price: 490,
         category: "buds",
         type: "buds",
-        stock: "∞",
+        stock: "0",
         image: "images/black-lebanon.png"
     },
     {
@@ -266,7 +266,7 @@ const productsData = [
         price: 300,
         category: "dispo",
         type: "dispo",
-        stock: "∞",
+        stock: "0",
         image: "images/MuhaMeds.png"
     },
 ];
